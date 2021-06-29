@@ -5,14 +5,29 @@ import pandas as pd
 from io import StringIO 
 from monthly_sales2 import func
 from stock_time_series import funcStock
+import umap
+from sklearn.datasets import fetch_openml
+from Umap_mnist import umapData
+from fastapi.middleware.cors import CORSMiddleware
+
 app=FastAPI()
 
+origins = [
+    #"http://localhost",
+    #"http://localhost:8000"
+    #"http://localhost:8080",
+'*']
 
-@app.get("/")
-async def helloworld():
-    return "hello from the api"
+# This completely screws up CORS and is highly insecure but excellent for prototyping
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
+#=====================================================================================================================================
 #this route takes input from User in the form of File and process that file and returns results to frontend
 @app.post("/Receive_File_From_User_Financials")
 async def submitFile(userInput:str=Form(...),upfiles: list[UploadFile] = File(...)):
@@ -32,7 +47,7 @@ async def submitFile(userInput:str=Form(...),upfiles: list[UploadFile] = File(..
     #Send this file object for processing
     #Receive output and send this as response
     return func(df)
-
+#-==================================================================================================================================
 #this route takes stock related data and returs json format
 @app.post("/Receive_File_From_User_Stocks")
 async def submitFile(userInput:str=Form(...),upfiles: list[UploadFile] = File(...)):
@@ -52,14 +67,20 @@ async def submitFile(userInput:str=Form(...),upfiles: list[UploadFile] = File(..
     #Send this file object for processing
     #Receive output and send this as response
     return funcStock(df)
+#=============================================================================================================================================
+#this route is for Umap_minst data and use its data to plot scatter plot
+@app.post("/Scatter_Plot")
+async def sctterplot():
+    data = fetch_openml("mnist_784", version=1)
+    report=umapData(data)
+    return report
 
 
-#@app.post("/Receive_Data_Fr_MySQLDB")
-#async def setupConnection(host:str=Form(...),user:str=Form(...),passwd:str=Form(...),database:str=Form(...)):
-    #mydb=mysql.connector.connect(host=host,user=user,passwd=passwd,database=database,auth_plugin='mysql_native_password')
-    #mycursor=mydb.cursor()
-    #mycursor.execute("show databases")
-    #for db in mycursor :
-        #print(db)
-
-
+# ==========================================================================================================================================
+# @app.post("/Receive_Data_Fr_MySQLDB")
+# async def setupConnection(host:str=Form(...),user:str=Form(...),passwd:str=Form(...),database:str=Form(...)):
+#     mydb=mysql.connector.connect(host=host,user=user,passwd=passwd,database=database,auth_plugin='mysql_native_password')
+#     mycursor=mydb.cursor()
+#     mycursor.execute("show databases")
+#     for db in mycursor :
+#         print(db)
