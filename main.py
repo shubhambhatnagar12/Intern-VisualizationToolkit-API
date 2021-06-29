@@ -5,7 +5,7 @@ import pandas as pd
 from io import StringIO 
 from monthly_sales2 import func
 from stock_time_series import funcStock
-import umap
+#import umap
 from sklearn.datasets import fetch_openml
 from Umap_mnist import umapData
 from fastapi.middleware.cors import CORSMiddleware
@@ -73,11 +73,11 @@ async def submitFile(userInput:str=Form(...),upfiles: list[UploadFile] = File(..
     return funcStock(df)
 #=============================================================================================================================================
 #this route is for Umap_minst data and use its data to plot scatter plot
-@app.post("/Scatter_Plot")
-async def sctterplot():
-    data = fetch_openml("mnist_784", version=1)
-    report=umapData(data)
-    return report
+# @app.post("/Scatter_Plot")
+# async def sctterplot():
+#     data = fetch_openml("mnist_784", version=1)
+#     report=umapData(data)
+#     return report
 
 
 # ==========================================================================================================================================
