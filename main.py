@@ -27,6 +27,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/")
+async def helloworld():
+    return "hello from the api"
 #=====================================================================================================================================
 #this route takes input from User in the form of File and process that file and returns results to frontend
 @app.post("/Receive_File_From_User_Financials")
