@@ -6,8 +6,8 @@ from io import StringIO
 from monthly_sales2 import func
 from stock_time_series import funcStock
 #import umap
-from sklearn.datasets import fetch_openml
-from Umap_mnist import umapData
+#from sklearn.datasets import fetch_openml
+#from Umap_mnist import umapData
 from fastapi.middleware.cors import CORSMiddleware
 
 app=FastAPI()
