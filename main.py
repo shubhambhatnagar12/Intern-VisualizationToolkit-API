@@ -5,7 +5,7 @@ import pandas as pd
 from io import StringIO 
 from monthly_sales22 import func
 from stock_time_series import funcStock
-import boto3
+#import boto3
 
 #from fastapi.middleware.cors import CORSMiddleware
 
