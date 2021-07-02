@@ -61,9 +61,9 @@ def funcStock(df):
     df1_VWAP_mean_rollingwindow = [i for i in df1.rolling(window=30).mean()['VWAP']]
     df1_VWAP_mean_rollingwindow = json.dumps(df1_VWAP_mean_rollingwindow)
 
-    jenc = json.JSONEncoder()
+    #jenc = json.JSONEncoder()
     # space = int('      '*5)
-    return jenc.encode({
+    return ({
         "name": "Stock Market time series",
         "id": random.randint(0, 2 ** 64 - 1),
         "results": {
@@ -121,21 +121,3 @@ def funcStock(df):
     # df1_prediction = [i for i in (valid_data[['Close', "Predictions"]])
 
 
-if __name__ == '__main__':
-    # Frontend code. These will be the input we get from the frontend like a file or DB connection. Specifying
-    # directly for simplicity
-    path = os.curdir  # use your path
-    print(path)
-    all_files = glob.glob(os.path.join(path, "*.csv"))  # advisable to use os.path.join as this makes concatenation OS independent
-
-    df_from_each_file = (pd.read_csv(f) for f in all_files)
-    df = pd.concat(df_from_each_file, ignore_index=True)
-
-    # Here, we are supposed to push these inputs to the API This is where report is generated. As this interaction
-    # can't take place directly in production we will be using an API as an intermediate. The API will do things
-    # like store reports, update report status to users, logging, compute billing related information by tracking usage
-    report = funcStock(df)
-    # Here, the frontend is supposed to retrieve the report This is frontend code again. Where the results are
-    # displayed to the user. I am simply printing here but in practice visualizations will be made here, also other
-    # insights will be displayed here.
-    print(report)
