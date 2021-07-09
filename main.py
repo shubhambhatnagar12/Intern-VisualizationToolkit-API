@@ -1,6 +1,7 @@
 from fastapi import FastAPI,File,UploadFile,Form
 import json
 #import mysql.connector
+from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 from io import StringIO 
 from monthly_sales22 import func
@@ -9,22 +10,22 @@ from stock_time_series import funcStock
 
 #from fastapi.middleware.cors import CORSMiddleware
 
+
+origins = ['*']
+     #"http://localhost",
+     #"http://localhost:8000"
+     #"http://localhost:8080",
+ 
 app=FastAPI()
-
-# origins = [
-#     #"http://localhost",
-#     #"http://localhost:8000"
-#     #"http://localhost:8080",
-# '*']
-
 # # This completely screws up CORS and is highly insecure but excellent for prototyping
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+app.add_middleware(
+     CORSMiddleware,
+     allow_origins=origins,
+     allow_credentials=True,
+     allow_methods=["*"],
+     allow_headers=["*"],
+ )
+
 
 
 @app.get("/")
